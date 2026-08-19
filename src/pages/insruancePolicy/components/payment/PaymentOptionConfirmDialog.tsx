@@ -104,13 +104,14 @@ function PaymentOptionConfirmDialog({ open = false, onClose, confirm, row, depos
                                 }
 
                                 {/* گزینه بدهکاری */}
-                              
+                                {paymentGroupType !== PolicyPaymentGroupType.DebtGroup &&
                                     <FormControlLabel
                                         value={PolicyPaymentOption.Debt}
                                         control={<Radio />}
                                         label={'ثبت بدهکاری مشتری'}
                                     />
-                                
+                                }
+
                                 {row?.paymentTypeId === PaymentType.Installment &&
                                     <FormHelperText>اگر کیف پول موجودی داشته باشد از موجودی کم می شود و مابقی بعنوان بدهی در کیف پول ثبت می شود.</FormHelperText>
                                 }
