@@ -1,6 +1,7 @@
 
 import cookie from 'js-cookie';
 import { ICurrentUser } from '../types/User';
+import { stopOnlineUsersConnection } from './onlineUserService';
 
 
 const COOKIE_NAME = "XI-Finance-Token";
@@ -28,12 +29,16 @@ const signIn = (user: ICurrentUser, location?: string) => {
     }
 }
 
-const signOut = (location?: string) => {
-    if (typeof window != 'undefined') {
-        cookie.remove(COOKIE_NAME);
-        window.location.href = location ?? "/login";
+const signOut = async (location?: string) => {
+    if (typeof window !== "undefined") {
+        try {
+            await stopOnlineUsersConnection();
+        } finally {
+            cookie.remove(COOKIE_NAME);
+            window.location.href = location ?? "/login";
+        }
     }
-}
+};
 
 const isUserAuthenticate = () => {
     try {

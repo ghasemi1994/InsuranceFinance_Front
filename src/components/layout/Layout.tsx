@@ -15,6 +15,8 @@ import { appBarHeight } from "./constants";
 import MyBreadcrumb from "./MyBreadcrumb";
 import { useAuthStore } from "@/stores/authStore";
 import UserNeedToChangePasswordDialog from "@/pages/users/UserNeedToChangePasswordDialog";
+import { useOnlineUsers } from "@/hooks/useOnlineUsers";
+import { getAccessToken } from "@/utils/userAuthenticate";
 
 const cacheRtl = createCache({
     key: "rtl",
@@ -22,8 +24,11 @@ const cacheRtl = createCache({
 });
 
 export default function Layout() {
+    const accessToken = getAccessToken();
 
     const { userInfo } = useAuthStore();
+
+    useOnlineUsers(accessToken);
 
     return (
         <CacheProvider value={cacheRtl}>

@@ -13,6 +13,8 @@ import { Stack } from '@mui/material';
 import { useAuthStore } from '../../stores/authStore';
 import Reminder from './Reminders/Reminder';
 import ColorModeIconDropdown from '@/theme/ColorModeIconDropdown';
+import OnlineUsersBadge from './OnlineUsersBadge';
+import { useOnlineUsersStore } from '@/stores/useOnlineUsersStore';
 
 
 export default function AccountMenu() {
@@ -29,6 +31,10 @@ export default function AccountMenu() {
 
     const { userInfo, status, getUserInfo } = useAuthStore();
 
+    const onlineUsers = useOnlineUsersStore(
+        (state) => state.count
+    );
+
     React.useEffect(() => {
         if (status === 'idle') getUserInfo();
     }, []);
@@ -38,6 +44,7 @@ export default function AccountMenu() {
         <>
 
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', gap: 2 }}>
+                <OnlineUsersBadge count={onlineUsers} />
                 <Reminder />
                 <Divider orientation="vertical" flexItem />
                 <ColorModeIconDropdown />
