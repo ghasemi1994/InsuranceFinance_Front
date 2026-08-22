@@ -41,7 +41,7 @@ import InstallmentAutoComplete from '../installment/InstallmentAutoComplete'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PaymentOptionConfirmDialog from './PaymentOptionConfirmDialog'
 import PeopleAutoComplete from '../../../../components/common/dropDown/PeopleAutoComplete'
-import { DepositMethodType } from '../../../../types/Wallet'
+import { DepositMethodType, DepositRequest } from '../../../../types/Wallet'
 import { getBalance } from '../../../../server/services/walletService'
 import { digitSeprator } from '../../../../utils/text'
 import useConfirm from '../../../../hooks/useConfirm'
@@ -434,6 +434,7 @@ export default function SinglePolicyPaymentDialog(props: IProps) {
                 depositMethodType={paymentMethod}
                 installmentItemId={watch('policyInstallmentItemId')}
                 paymentGroupType={paymentGroupType}
+                depositRequest={watch('depositRequest') as DepositRequest}
             />
 
             <Dialog

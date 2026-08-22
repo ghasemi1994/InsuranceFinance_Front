@@ -67,10 +67,14 @@ export default function Insurance() {
           showInMenu
         />,
         <GridActionsCellItem
-          icon={<Tooltip title="ویرایش"><EditIcon color='primary' /></Tooltip>}
+          icon={
+            <Tooltip title="ویرایش">
+              <EditIcon color={params.row.depositStatus !== DepositStatus.Complete ? 'primary' : 'disabled'} />
+            </Tooltip>}
           label="ویرایش"
           onClick={() => handleEditClick(params.row)}
           showInMenu
+          disabled={params.row.depositStatus === DepositStatus.Complete}
         />,
         <GridActionsCellItem
           disabled={params.row.formId === null}
@@ -95,9 +99,14 @@ export default function Insurance() {
           showInMenu
         />,
         <GridActionsCellItem
-          icon={<Tooltip title="پرداخت"><AddCard color='primary' /></Tooltip>}
+          icon={
+            <Tooltip title="پرداخت">
+              <AddCard color={params.row.depositStatus !== DepositStatus.Complete ? 'primary' : 'disabled'} />
+            </Tooltip>
+          }
           label="پرداخت مشتری"
           onClick={() => handlePaymentOpenDialog(params.row)}
+          disabled={params.row.depositStatus === DepositStatus.Complete}
         />,
         <GridActionsCellItem
           disabled={params.row.paymentTypeId === PaymentType.Cash}
@@ -297,6 +306,8 @@ export default function Insurance() {
   }
 
   const handlePolicyRenewal = (row: IInsurancePolicyResponse) => {
+    if (row.depositStatus === DepositStatus.Complete)
+      return;
     setCurrentRow(row);
     setPolicyRenewal(true);
     setOpenCreateOrUpdate(true);
@@ -339,6 +350,8 @@ export default function Insurance() {
   }
 
   const handlePaymentOpenDialog = (row: IInsurancePolicyResponse) => {
+    if (row.depositStatus === DepositStatus.Complete)
+      return;
     setCurrentRow(row);
     setOpenPolicyPaymentDialog(true);
   }
